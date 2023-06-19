@@ -1,8 +1,10 @@
 package com.angeltm.ejercicio1.student;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,5 +36,16 @@ public class StudentController {
         return studentService.addStudent(student);
     }
     
+    @GetMapping()
+    public Objeto getStudent(@PathVariable long id){
+        Optional<Student> estudiante = studentService.getStudent(id);
+        if (estudiante.isPresent()) {
+            Objeto respuesta = new Objeto(estudiante.get(),true);
+            return respuesta;
+        }else{
+            Objeto respuesta = new Objeto(null,false);
+            return respuesta;
+        }
+    }
 
 }
